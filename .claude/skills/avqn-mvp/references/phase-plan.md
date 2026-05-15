@@ -10,7 +10,7 @@ Produire un brief d'implémentation complet (la fiche de feature) **sans écrire
 
 ### Étape 1 — Préparation (silencieuse)
 
-1. Lire `AGENTS.md`, `.avqn/PRODUCT.md`, `.avqn/STACK.md`
+1. Lire `.avqn/PRODUCT.md` et `.avqn/STACK.md` (`CLAUDE.md` est déjà en contexte)
 2. Lister les fichiers de `specs/` pour déterminer le prochain numéro (NN). Format : 01, 02, 03... avec zéro initial jusqu'à 09.
 3. Si `specs/` n'existe pas, le créer.
 
@@ -73,7 +73,7 @@ Confirmer à l'utilisateur :
 - Écrire du code, même un snippet, pendant la phase plan
 - Poser plus de 10 questions au total (5 produit + 5 tech maximum)
 - Sauter l'étape de validation intermédiaire
-- Générer une fiche sans avoir le contexte projet (PRODUCT.md, AGENTS.md)
+- Générer une fiche sans avoir le contexte projet (`.avqn/PRODUCT.md`, `CLAUDE.md`)
 - Numéroter la feature sans vérifier les fiches existantes
 - Mélanger les questions produit et techniques dans la même salve
 

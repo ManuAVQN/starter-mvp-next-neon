@@ -21,7 +21,7 @@ pnpm lint
 pnpm typecheck
 ```
 
-(ou les équivalents définis dans `AGENTS.md` / `package.json`)
+(ou les équivalents définis dans `.avqn/STACK.md` / `package.json`)
 
 **Si une commande échoue** :
 1. Identifier les erreurs

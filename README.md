@@ -12,7 +12,7 @@ Le repo embarque un skill Claude Code (`avqn-mvp`) et trois slash commands qui p
 | `/build-feature [NN]` | 2 — Implémenter | Implémente la feature en suivant strictement la fiche. S'arrête pour test manuel utilisateur. |
 | `/ship-feature [NN]` | 3 — Livrer | Lint + typecheck, met à jour la fiche, commit unique `feat: [NN] ...`, push sur `main`. |
 
-Le skill s'active automatiquement à la présence d'`AGENTS.md` à la racine. Aucune installation manuelle requise : ouvrez le repo dans Claude Code et les commandes sont disponibles.
+Le skill s'active automatiquement via le `CLAUDE.md` à la racine. Aucune installation manuelle requise : ouvrez le repo dans Claude Code et les commandes sont disponibles.
 
 Détails du workflow dans `.claude/skills/avqn-mvp/SKILL.md` et ses références.
 
@@ -79,7 +79,7 @@ L'app est disponible sur [http://localhost:3000](http://localhost:3000).
 
 ```
 .claude/                    Infrastructure agentic (livrée avec le repo)
-  skills/avqn-mvp/          Skill Claude Code activé par AGENTS.md
+  skills/avqn-mvp/          Skill Claude Code (workflow + invariants)
   commands/                 /plan-feature, /build-feature, /ship-feature
 app/                        Pages Next.js (App Router)
   (public)/                 Routes publiques (home)
@@ -102,8 +102,7 @@ lib/                        Logique métier
   STACK.md                  Détails techniques (figé)
   DECISIONS.md              Journal des décisions techniques
 specs/                      Fiches de features (créées par /plan-feature)
-AGENTS.md                   Conventions du projet (lu par Claude au démarrage)
-CLAUDE.md                   Entry point Claude Code
+CLAUDE.md                   Entry point unique pour les agents IA
 proxy.ts                    Protection des routes (app)/ (Next 16)
 ```
 

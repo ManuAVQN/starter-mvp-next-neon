@@ -12,7 +12,7 @@ Journal chronologique des décisions techniques structurantes. Append-only.
 
 **Ne pas ajouter d'entrée** pour :
 - Les choix triviaux (utiliser un `<Button>` shadcn plutôt qu'un `<button>` natif)
-- Les choix imposés par le starter kit ou AGENTS.md (ils sont déjà documentés)
+- Les choix imposés par le starter kit ou `.avqn/STACK.md` (ils sont déjà documentés)
 - Les "détails d'implémentation" non structurants
 
 ## Format d'une entrée

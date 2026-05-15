@@ -11,9 +11,8 @@ Implémenter la feature en suivant strictement le brief technique (partie 2 de l
 ### Étape 1 — Chargement du contexte
 
 1. Lire `specs/[NN]-[slug].md` (la fiche de la feature)
-2. Lire `AGENTS.md` pour les conventions
-3. Lire `.avqn/STACK.md` pour les patterns techniques
-4. Mettre à jour la fiche : statut "en cours", date de démarrage
+2. Lire `.avqn/STACK.md` pour les patterns techniques (`CLAUDE.md` est déjà en contexte)
+3. Mettre à jour la fiche : statut "en cours", date de démarrage
 
 Si la fiche n'existe pas, refuser et orienter vers `/plan-feature`.
 
@@ -34,7 +33,7 @@ Avant d'écrire du code, annoncer brièvement le plan :
 Suivre l'ordre du plan d'action. Pour chaque étape :
 
 1. Créer/modifier les fichiers nécessaires
-2. Suivre les conventions de `AGENTS.md` à la lettre
+2. Suivre les conventions de `.avqn/STACK.md` à la lettre
 3. Préférer les composants shadcn existants à la création de composants custom
 4. Préférer les patterns du starter kit aux patterns "inventés"
 
@@ -94,7 +93,7 @@ Annoncer la fin :
 - Lancer `pnpm dev` automatiquement (le client doit le faire pour comprendre le flow)
 - Commit ou push en phase build (c'est le job de ship)
 - Installer des dépendances sans valider avec l'utilisateur
-- Modifier `AGENTS.md`, `PRODUCT.md` ou `STACK.md` sans demander
+- Modifier `CLAUDE.md`, `.avqn/PRODUCT.md` ou `.avqn/STACK.md` sans demander
 - Ignorer un critère de la fiche en pensant qu'il n'est "pas essentiel"
 - Créer des fichiers ou dossiers qui ne suivent pas la structure du starter kit
 
