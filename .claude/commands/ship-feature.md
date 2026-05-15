@@ -2,19 +2,129 @@
 description: Finalise et livre une feature (phase 3 du workflow AVQN)
 ---
 
-Active la **Phase 3 — Livrer** du workflow AVQN MVP.
-
-Lis d'abord `references/phase-ship.md` du skill `avqn-mvp` pour avoir le déroulé détaillé.
+# Phase 3 — Livrer une feature
 
 Numéro de la feature à livrer (fourni par l'utilisateur) :
 $ARGUMENTS
 
 Si l'argument est vide, demande à l'utilisateur quelle feature livrer et liste les fiches en statut "en cours" dans `specs/`.
 
-Rappels critiques :
-- Lancer `pnpm lint` et `pnpm typecheck` (ou équivalents), corriger jusqu'à ce que tout passe
-- Mettre à jour la fiche `specs/[NN]-[slug].md` : statut "terminée", date de fin, partie 3 remplie
-- Ajouter une entrée à `.avqn/DECISIONS.md` si la feature contient des décisions techniques notables
-- Commit unique avec message `feat: [NN] [titre court]`
-- Push sur main
-- Confirmer la livraison à l'utilisateur avec le lien Vercel
+## Objectif
+
+Finaliser proprement : qualité du code vérifiée, documentation à jour, code commité et déployé. Une seule feature = un seul commit sur main.
+
+## Déroulé
+
+### Étape 1 — Vérification préalable
+
+Vérifier que la feature [NN] est bien en statut "en cours" dans `specs/[NN]-[slug].md`. Si statut "planifiée", refuser et orienter vers `/build-feature`. Si statut "terminée", signaler qu'elle est déjà livrée et orienter vers `/fix` pour un correctif.
+
+**Confirmation du test utilisateur** — avant de continuer :
+
+> Avant de livrer, deux questions :
+> 1. Avez-vous validé tous les critères de fini de la fiche en local ?
+> 2. Si la feature touche à des surfaces partagées (auth, layout, navigation, composants UI partagés, schéma DB déjà utilisé ailleurs), avez-vous retesté les parcours adjacents pour vérifier qu'ils ne sont pas régressés ?
+>
+> Si oui aux deux, on ship. Sinon, prenez 2 minutes pour le faire — c'est plus rapide qu'un rollback.
+
+Si l'utilisateur n'a pas testé, ne pas insister mais avertir et continuer à sa demande.
+
+### Étape 2 — Lint et typecheck
+
+Lancer les commandes de qualité dans cet ordre :
+
+```bash
+pnpm lint
+pnpm typecheck
+```
+
+(ou les équivalents définis dans `.avqn/STACK.md` / `package.json`)
+
+**Si une commande échoue** :
+1. Identifier les erreurs
+2. Les corriger
+3. Relancer la commande
+4. Boucler jusqu'à ce que tout passe
+
+**Important** : ne pas désactiver une règle de lint pour faire passer le check. Si une règle pose problème de façon légitime, le signaler à l'utilisateur et lui demander avis.
+
+### Étape 3 — Mise à jour de la fiche
+
+Compléter `specs/[NN]-[slug].md` :
+
+- Statut : `terminée`
+- Date de fin : `[date du jour au format YYYY-MM-DD]`
+- **Partie 3 — Notes post-implémentation** : rédiger 3-6 bullets honnêtes sur :
+  - Ce qui a changé par rapport au plan initial (si applicable)
+  - Les bugs ou difficultés rencontrés et comment ils ont été résolus
+  - Les choix techniques pris en cours de route (qui doivent aussi aller dans `.avqn/DECISIONS.md`)
+  - Les points d'attention pour le futur (ex : "à reprendre quand on aura plus de 100 users", "le polling toutes les 5s pourra devenir un websocket")
+  - Si rien de notable : écrire "Implémentation conforme au plan, aucune décision notable en cours de route."
+
+Cocher les critères de fini quand ils sont validés.
+
+### Étape 4 — Mise à jour de DECISIONS.md
+
+Si la feature contient des décisions techniques notables (nouveau pattern, choix de lib, alternative écartée), ajouter une entrée dans `.avqn/DECISIONS.md`. Voir `.claude/skills/avqn-mvp/references/decisions-format.md` pour le format.
+
+Si aucune décision notable, ne rien ajouter. `.avqn/DECISIONS.md` doit rester un document à haute valeur ajoutée, pas un journal exhaustif.
+
+### Étape 5 — Commit
+
+Faire un commit unique, avec tous les fichiers modifiés. Format du message :
+
+```
+feat: [NN] [titre court de la feature]
+
+[description en 1-2 phrases si utile, optionnel]
+```
+
+Voir `.claude/skills/avqn-mvp/references/commit-format.md` pour les cas particuliers (fix, refactor, docs).
+
+### Étape 6 — Push
+
+```bash
+git push origin main
+```
+
+Si le push échoue (conflit, droits) :
+1. Diagnostiquer
+2. Si conflit : demander à l'utilisateur ce qu'il a fait sur le repo (a-t-il modifié des fichiers depuis ailleurs ?)
+3. Résoudre avec son aide
+
+### Étape 7 — Confirmation de livraison
+
+Annoncer le succès :
+
+> ✅ Feature [NN] livrée avec succès.
+>
+> - Commit : `feat: [NN] [titre]`
+> - Push effectué sur `main`
+> - Vercel va déployer automatiquement dans environ 1 à 2 minutes
+> - Lien du projet déployé : [URL Vercel si connue, sinon "consultable dans votre dashboard Vercel"]
+>
+> La fiche `specs/[NN]-[slug].md` a été mise à jour avec les notes finales.
+>
+> Pour démarrer une nouvelle feature, lancez `/plan-feature` quand vous êtes prêt.
+
+## Anti-patterns à éviter
+
+- Skipper le lint/typecheck "parce que c'est juste un petit changement"
+- Désactiver une règle de lint pour gagner du temps
+- Faire plusieurs commits pour une seule feature (mélange les granularités)
+- Pousser sur une branche autre que `main`
+- Oublier de mettre à jour le statut dans la fiche
+- Spammer `.avqn/DECISIONS.md` avec des entrées sans valeur (ex : "j'ai utilisé une div")
+- Confirmer la livraison avant que le push soit effectivement réussi
+
+## Cas particuliers
+
+**Si le client veut livrer alors qu'il n'a pas testé** :
+
+> Avant de livrer, je préfère que vous validiez que la feature fonctionne en local. Avez-vous lancé `pnpm dev` et vérifié les critères de la fiche ? Si oui, lançons le ship. Sinon, prenez 2 minutes pour tester, c'est important.
+
+**Si lint ou typecheck échoue de façon récurrente après plusieurs tentatives** :
+
+> J'ai du mal à résoudre ces erreurs proprement. Plutôt que de bricoler, je préfère vous montrer ce qui bloque et qu'on en discute. Voici l'erreur : [détail]. Je vous propose [pistes]. Comment souhaitez-vous procéder ?
+
+Ne jamais commit avec des erreurs de lint/typecheck.

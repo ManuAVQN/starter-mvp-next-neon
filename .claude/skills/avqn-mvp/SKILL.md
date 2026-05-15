@@ -5,7 +5,7 @@ description: Pilote le workflow AVQN de développement de MVP — trois phases p
 
 # AVQN MVP Workflow
 
-Source de vérité du workflow MVP AVQN et de ses règles invariantes. Trois phases, trois slash commands, avec pause humaine obligatoire entre chaque.
+Source de vérité du workflow MVP AVQN et de ses règles invariantes. Trois phases (plan, build, ship) avec pause humaine obligatoire entre chacune, plus deux commandes complémentaires (init-project, fix). Le détail de chaque commande vit dans son fichier `.claude/commands/[nom].md` — ce skill décrit les invariants et l'aiguillage.
 
 ## Contexte projet à charger
 
@@ -33,11 +33,11 @@ Ces principes priment sur toute autre considération. Ne jamais les contourner s
 
 ## Les 3 phases du workflow
 
-Chaque phase correspond à une commande slash. Lire le fichier dédié au moment de la commande :
+Chaque phase est pilotée par une slash command **self-contained** — tout le déroulé vit dans `.claude/commands/[nom].md`, c'est le seul fichier à charger pour exécuter une phase :
 
-- **Phase 1 — Planifier** : `references/phase-plan.md` quand l'utilisateur lance `/plan-feature [description]`
-- **Phase 2 — Implémenter** : `references/phase-build.md` quand l'utilisateur lance `/build-feature [NN]`
-- **Phase 3 — Livrer** : `references/phase-ship.md` quand l'utilisateur lance `/ship-feature [NN]`
+- **Phase 1 — Planifier** : `.claude/commands/plan-feature.md` (`/plan-feature [description]`)
+- **Phase 2 — Implémenter** : `.claude/commands/build-feature.md` (`/build-feature [NN]`)
+- **Phase 3 — Livrer** : `.claude/commands/ship-feature.md` (`/ship-feature [NN]`)
 
 Si l'utilisateur exprime une intention de développement sans slash command (ex : "je veux ajouter un système de tags"), l'orienter :
 
@@ -45,10 +45,10 @@ Si l'utilisateur exprime une intention de développement sans slash command (ex 
 
 ## Commandes complémentaires (hors workflow MVP)
 
-- **`/init-project`** → `references/phase-init.md`. Setup initial du projet après dezip du starter (PRODUCT.md, branding, `.env.local`, premier commit). À lancer une seule fois.
-- **`/fix [description]`** → `references/phase-fix.md`. Correctif rapide pour un bug, sans fiche `specs/` ni numéro de feature.
+- **`/init-project`** → `.claude/commands/init-project.md`. Setup initial du projet après dezip du starter (PRODUCT.md, branding, `.env.local`, premier commit). À lancer une seule fois.
+- **`/fix [description]`** → `.claude/commands/fix.md`. Correctif rapide pour un bug, sans fiche `specs/` ni numéro de feature.
 
-Si l'utilisateur signale un bug sans slash command ("ça marche pas", "y a une erreur quand je…") , l'orienter vers `/fix [description]`.
+Si l'utilisateur signale un bug sans slash command ("ça marche pas", "y a une erreur quand je…"), l'orienter vers `/fix [description]`.
 Si l'utilisateur vient de récupérer le starter sans avoir rien configuré, l'orienter vers `/init-project`.
 
 ## Outils annexes à mobiliser
@@ -56,11 +56,13 @@ Si l'utilisateur vient de récupérer le starter sans avoir rien configuré, l'o
 - **MCP `context7`** : à invoquer dès qu'il y a un doute sur une API récente (Next 16, Better Auth 1.6, Drizzle 0.45, Tailwind 4). Plus fiable que la mémoire pré-entraînée du modèle. Préférer un check `context7` à un risque d'hallucination.
 - **Skill `frontend-design`** : peut se déclencher en parallèle sur du travail UI. **Le cadrer systématiquement** avec les contraintes de `.avqn/STACK.md` : composants `components/ui/` (shadcn préset `nova`) imposés, palette neutre noir/blanc/gris, pas de mode sombre par défaut, Tailwind 4 sans `tailwind.config.ts`. Ne pas le laisser inventer un système de design parallèle.
 
-## Templates et formats
+## Templates et formats partagés
 
-- Format des fiches de feature : voir `references/feature-template.md`
-- Format des entrées dans `.avqn/DECISIONS.md` : voir `references/decisions-format.md`
-- Format des messages de commit : voir `references/commit-format.md`
+Les artefacts de formatage utilisés par plusieurs commandes vivent dans `references/` :
+
+- Format des fiches de feature : `references/feature-template.md` (utilisé par `/plan-feature`)
+- Format des entrées dans `.avqn/DECISIONS.md` : `references/decisions-format.md` (utilisé par `/ship-feature` et `/fix`)
+- Format des messages de commit : `references/commit-format.md` (utilisé par `/ship-feature` et `/fix`)
 
 ## Comportement en cas d'ambiguïté
 
@@ -68,7 +70,7 @@ Si l'utilisateur demande quelque chose qui sort du workflow (refactor, bug fix u
 
 1. Le signaler clairement : "Cette demande sort du workflow MVP standard."
 2. Demander si on traite ça comme une feature à part entière (`/plan-feature`) ou comme un correctif rapide (`/fix`, hors workflow, sans fiche de spec).
-3. Si l'utilisateur opte pour le correctif rapide, charger `references/phase-fix.md` et suivre le déroulé.
+3. Si l'utilisateur opte pour le correctif rapide, charger `.claude/commands/fix.md` et suivre le déroulé.
 
 Si l'utilisateur demande d'installer Spec-Kit, Superpowers ou un autre framework lourd :
 
