@@ -4,25 +4,25 @@ Un starter Next.js **agentic-ready** pour démarrer rapidement des projets MVP a
 
 ## Workflow agentic intégré
 
-Le repo embarque un skill Claude Code (`avqn-mvp`) et trois slash commands qui pilotent un workflow MVP simple :
+Le repo embarque un skill Claude Code (`avqn-mvp`) et cinq slash commands qui pilotent un workflow MVP simple :
 
-| Commande | Phase | Rôle |
-|---|---|---|
-| `/plan-feature [description]` | 1 — Planifier | Génère une fiche de feature dans `specs/[NN]-[slug].md` après questions produit + techniques. Pas de code écrit à ce stade. |
-| `/build-feature [NN]` | 2 — Implémenter | Implémente la feature en suivant strictement la fiche. S'arrête pour test manuel utilisateur. |
-| `/ship-feature [NN]` | 3 — Livrer | Lint + typecheck, met à jour la fiche, commit unique `feat: [NN] ...`, push sur `main`. |
+| Commande | Rôle |
+|---|---|
+| `/init-project` | Setup initial du projet après dezip du starter : branding, `PRODUCT.md`, `.env.local`, premier commit. À lancer une seule fois. |
+| `/plan-feature [description]` | Phase 1 — Génère une fiche de feature dans `specs/[NN]-[slug].md` après questions produit + techniques. Pas de code écrit à ce stade. |
+| `/build-feature [NN]` | Phase 2 — Implémente la feature en suivant strictement la fiche. S'arrête pour test manuel utilisateur. |
+| `/ship-feature [NN]` | Phase 3 — Lint + typecheck, met à jour la fiche, commit unique `feat: [NN] ...`, push sur `main`. |
+| `/fix [description]` | Correctif rapide hors workflow MVP (bug à corriger, sans fiche `specs/`). |
 
-Le skill s'active automatiquement via le `CLAUDE.md` à la racine. Aucune installation manuelle requise : ouvrez le repo dans Claude Code et les commandes sont disponibles.
+Le skill `avqn-mvp` se déclenche dès qu'une intention de développement est détectée, ou via les slash commands ci-dessus. Aucune installation manuelle requise : ouvrez le repo dans Claude Code et les commandes sont disponibles.
 
-Détails du workflow dans `.claude/skills/avqn-mvp/SKILL.md` et ses références.
+Détails du workflow dans `.claude/skills/avqn-mvp/SKILL.md` et le contenu intégral de chaque commande dans `.claude/commands/`.
 
-### Outils Claude Code complémentaires (livrés avec le repo)
+### Outil tiers livré avec le repo
 
 | Outil | Source | Usage |
 |---|---|---|
-| Skill `frontend-design` | [anthropics/claude-code](https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design) | Auto-activé sur travail UI — guide les choix esthétiques pour éviter le rendu IA générique |
-| Slash command `/code-review` | [anthropics/claude-code](https://github.com/anthropics/claude-code/tree/main/plugins/code-review) | Review de PR via plusieurs agents en parallèle (CLAUDE.md compliance, bugs, historique) |
-| MCP `context7` | [upstash/context7](https://github.com/upstash/context7) | Docs à jour des libs (Next, Better Auth, Drizzle…) — ajoutez "use context7" à un prompt |
+| MCP `context7` | [upstash/context7](https://github.com/upstash/context7) | Docs à jour des libs (Next, Better Auth, Drizzle…) — à invoquer en cas de doute sur une API récente plutôt que se fier à la mémoire pré-entraînée |
 
 Le MCP context7 est configuré sans clé API (tier public, rate-limited). Pour des quotas plus larges, créez une clé sur [context7.com](https://context7.com) et ajoutez l'header dans `.mcp.json`.
 

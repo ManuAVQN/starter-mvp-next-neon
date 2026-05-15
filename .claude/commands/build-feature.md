@@ -50,7 +50,7 @@ Cas particuliers :
 Avant d'annoncer le plan, faire deux check rapides :
 
 - **Doute sur une API ?** Si le brief touche à Next 16, Better Auth 1.6, Drizzle 0.45, Tailwind 4, ou toute lib dont la dernière API peut différer de la mémoire pré-entraînée → invoquer `context7` pour récupérer la doc à jour. Préférer un check explicite à une hallucination silencieuse.
-- **Travail UI ?** Si la feature touche à l'interface, **encadrer mentalement** `frontend-design` (ce skill peut s'activer en parallèle) avec les contraintes de `.avqn/STACK.md` : composants `components/ui/` (shadcn préset `nova`) imposés, palette neutre noir/blanc/gris, pas de dark mode, Tailwind 4 sans `tailwind.config.ts`. Ne pas laisser inventer un système de design parallèle.
+- **Travail UI ?** Respecter les conventions de `.avqn/STACK.md` : composants `components/ui/` (shadcn préset `nova`) imposés, palette neutre noir/blanc/gris, pas de mode sombre, Tailwind 4 sans `tailwind.config.ts`. Éviter les défauts de rendu IA génériques (gradients violet/cyan par défaut, glassmorphism gratuit, mélange de fonts arbitraire).
 
 ### Étape 3 — Annonce du plan d'action
 

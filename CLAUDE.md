@@ -71,9 +71,8 @@ Pour adapter le starter à un nouveau projet : modifier `APP_NAME` et `APP_DESCR
 
 ## Outils complémentaires disponibles
 
-En plus du workflow AVQN, le repo embarque deux outils Claude Code livrés tels quels :
+En plus du workflow AVQN, le repo embarque un outil tiers livré tel quel :
 
-- **Skill `frontend-design`** (Anthropic, auto-activé sur travail UI) — guide les choix esthétiques pour éviter le rendu IA générique. Sur ce projet, il est encadré par les conventions UI de `.avqn/STACK.md` (shadcn imposé, palette neutre noir/blanc/gris, Tailwind 4 sans config externe).
 - **MCP `context7`** (Upstash, `.mcp.json`) — sert les docs à jour des libs (Next 16, Better Auth, Drizzle, Tailwind 4). À invoquer en cas de doute sur l'API d'une lib récente plutôt que se fier à la mémoire pré-entraînée.
 
 ## Comportement hors workflow
