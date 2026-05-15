@@ -10,7 +10,17 @@ Finaliser proprement : qualité du code vérifiée, documentation à jour, code 
 
 ### Étape 1 — Vérification préalable
 
-Vérifier que la feature [NN] est bien en statut "en cours" dans `specs/[NN]-[slug].md`. Si statut "planifiée", refuser et orienter vers `/build-feature`. Si statut "terminée", signaler qu'elle est déjà livrée et demander si on veut faire un fix correctif.
+Vérifier que la feature [NN] est bien en statut "en cours" dans `specs/[NN]-[slug].md`. Si statut "planifiée", refuser et orienter vers `/build-feature`. Si statut "terminée", signaler qu'elle est déjà livrée et orienter vers `/fix` pour un correctif.
+
+**Confirmation du test utilisateur** — avant de continuer :
+
+> Avant de livrer, deux questions :
+> 1. Avez-vous validé tous les critères de fini de la fiche en local ?
+> 2. Si la feature touche à des surfaces partagées (auth, layout, navigation, composants UI partagés, schéma DB déjà utilisé ailleurs), avez-vous retesté les parcours adjacents pour vérifier qu'ils ne sont pas régressés ?
+>
+> Si oui aux deux, on ship. Sinon, prenez 2 minutes pour le faire — c'est plus rapide qu'un rollback.
+
+Si l'utilisateur n'a pas testé, ne pas insister mais avertir et continuer à sa demande.
 
 ### Étape 2 — Lint et typecheck
 

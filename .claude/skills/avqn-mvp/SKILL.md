@@ -1,6 +1,6 @@
 ---
 name: avqn-mvp
-description: Pilote le workflow AVQN de développement de MVP en 3 phases (plan, build, ship) pour les clients formés par AVQN. À utiliser systématiquement dès que le projet contient un fichier CLAUDE.md mentionnant AVQN, ou dès que l'utilisateur lance une des commandes /plan-feature, /build-feature, /ship-feature. À utiliser aussi quand l'utilisateur dit "je veux ajouter une feature", "implémente X", "on push", "c'est bon ça marche", ou toute formulation indiquant qu'il est dans le flow de développement d'une feature MVP avec le starter kit AVQN.
+description: Pilote le workflow AVQN de développement de MVP — trois phases principales (plan, build, ship) et deux commandes complémentaires (init-project, fix) — pour les clients formés par AVQN. À utiliser systématiquement dès que le projet est basé sur le starter AVQN, ou dès que l'utilisateur lance une des commandes /plan-feature, /build-feature, /ship-feature, /init-project, /fix. À utiliser aussi quand l'utilisateur dit "je veux ajouter une feature", "implémente X", "on push", "c'est bon ça marche", "y a un bug", "je viens de dezipper le starter", ou toute formulation indiquant qu'il est dans le flow de développement avec le starter kit AVQN.
 ---
 
 # AVQN MVP Workflow
@@ -43,6 +43,19 @@ Si l'utilisateur exprime une intention de développement sans slash command (ex 
 
 > Pour démarrer une nouvelle feature, lancez `/plan-feature` suivi d'une description courte de ce que vous voulez faire. Nous passerons par une phase de questions pour bien cadrer la fonctionnalité avant de coder.
 
+## Commandes complémentaires (hors workflow MVP)
+
+- **`/init-project`** → `references/phase-init.md`. Setup initial du projet après dezip du starter (PRODUCT.md, branding, `.env.local`, premier commit). À lancer une seule fois.
+- **`/fix [description]`** → `references/phase-fix.md`. Correctif rapide pour un bug, sans fiche `specs/` ni numéro de feature.
+
+Si l'utilisateur signale un bug sans slash command ("ça marche pas", "y a une erreur quand je…") , l'orienter vers `/fix [description]`.
+Si l'utilisateur vient de récupérer le starter sans avoir rien configuré, l'orienter vers `/init-project`.
+
+## Outils annexes à mobiliser
+
+- **MCP `context7`** : à invoquer dès qu'il y a un doute sur une API récente (Next 16, Better Auth 1.6, Drizzle 0.45, Tailwind 4). Plus fiable que la mémoire pré-entraînée du modèle. Préférer un check `context7` à un risque d'hallucination.
+- **Skill `frontend-design`** : peut se déclencher en parallèle sur du travail UI. **Le cadrer systématiquement** avec les contraintes de `.avqn/STACK.md` : composants `components/ui/` (shadcn préset `nova`) imposés, palette neutre noir/blanc/gris, pas de mode sombre par défaut, Tailwind 4 sans `tailwind.config.ts`. Ne pas le laisser inventer un système de design parallèle.
+
 ## Templates et formats
 
 - Format des fiches de feature : voir `references/feature-template.md`
@@ -54,8 +67,8 @@ Si l'utilisateur exprime une intention de développement sans slash command (ex 
 Si l'utilisateur demande quelque chose qui sort du workflow (refactor, bug fix urgent, modification de la stack, etc.) :
 
 1. Le signaler clairement : "Cette demande sort du workflow MVP standard."
-2. Demander si on traite ça comme une feature à part entière (`/plan-feature`) ou comme un correctif rapide (hors workflow, sans fiche de spec).
-3. Si correctif rapide : faire la modification, lancer lint, commit avec préfixe `fix:`, push. Ne pas créer de fiche dans `specs/` mais ajouter une entrée dans `.avqn/DECISIONS.md` si la décision est notable.
+2. Demander si on traite ça comme une feature à part entière (`/plan-feature`) ou comme un correctif rapide (`/fix`, hors workflow, sans fiche de spec).
+3. Si l'utilisateur opte pour le correctif rapide, charger `references/phase-fix.md` et suivre le déroulé.
 
 Si l'utilisateur demande d'installer Spec-Kit, Superpowers ou un autre framework lourd :
 
@@ -76,11 +89,13 @@ Si l'utilisateur demande d'installer Spec-Kit, Superpowers ou un autre framework
 
 À chaque action significative, mettre à jour les documents pertinents :
 
+- `/init-project` → remplit `.avqn/PRODUCT.md`, modifie `lib/config.ts`, peut créer `.env.local`
 - `/plan-feature` → crée `specs/[NN]-[slug].md`
 - `/build-feature` → met à jour le statut dans la fiche, ne touche pas à `.avqn/DECISIONS.md`
 - `/ship-feature` → complète la partie 3 de la fiche, ajoute une entrée à `.avqn/DECISIONS.md` si décision notable, commit + push
+- `/fix` → modifie le code, commit `fix:`, push ; ajoute une entrée à `.avqn/DECISIONS.md` uniquement si le correctif révèle quelque chose de structurant
 
-Ne jamais modifier `CLAUDE.md`, `.avqn/PRODUCT.md` ou `.avqn/STACK.md` sans demander explicitement à l'utilisateur.
+Ne jamais modifier `CLAUDE.md` ou `.avqn/STACK.md` sans demander explicitement à l'utilisateur. `.avqn/PRODUCT.md` n'est modifié que par `/init-project` ou à la demande explicite.
 
 ## Pour aller plus loin
 

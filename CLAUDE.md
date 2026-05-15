@@ -2,7 +2,7 @@
 
 Entry point unique pour les agents IA travaillant sur ce projet. Lisez-le en premier.
 
-Ce projet utilise le **starter kit AVQN** et suit la méthodologie AVQN MVP. Le skill `avqn-mvp` s'active automatiquement sur ce projet.
+Ce projet utilise le **starter kit AVQN** et suit la méthodologie AVQN MVP. Le skill `avqn-mvp` se déclenche dès qu'une intention de développement est détectée, ou via les slash commands listées plus bas.
 
 ## Tone et langue
 
@@ -16,6 +16,11 @@ Toute feature passe par trois slash commands, dans l'ordre, **avec pause humaine
 1. `/plan-feature [description]` → fiche dans `specs/[NN]-[slug].md`
 2. `/build-feature [NN]` → implémente
 3. `/ship-feature [NN]` → lint + typecheck + commit + push
+
+Deux commandes complémentaires hors workflow MVP :
+
+- `/init-project` — guide le setup initial du projet (à lancer une seule fois après le dezip du starter).
+- `/fix [description]` — correctif rapide pour un bug, sans passer par une fiche de feature.
 
 Les règles complètes du workflow (invariants, gestion des cas d'ambiguïté, anti-patterns) vivent dans `.claude/skills/avqn-mvp/SKILL.md` — **c'est la source de vérité**, pas ce fichier.
 
@@ -66,17 +71,16 @@ Pour adapter le starter à un nouveau projet : modifier `APP_NAME` et `APP_DESCR
 
 ## Outils complémentaires disponibles
 
-En plus du workflow AVQN, le repo embarque trois outils Claude Code livrés tels quels :
+En plus du workflow AVQN, le repo embarque deux outils Claude Code livrés tels quels :
 
-- **Skill `frontend-design`** (Anthropic, auto-activé sur travail UI) — guide les choix esthétiques pour éviter le rendu IA générique.
-- **Slash command `/code-review`** (Anthropic) — review de PR via plusieurs agents en parallèle (CLAUDE.md compliance, bugs, historique).
-- **MCP `context7`** (Upstash, `.mcp.json`) — sert les docs à jour des libs (Next, Better Auth, Drizzle, etc.). Ajoutez "use context7" à un prompt pour l'invoquer.
+- **Skill `frontend-design`** (Anthropic, auto-activé sur travail UI) — guide les choix esthétiques pour éviter le rendu IA générique. Sur ce projet, il est encadré par les conventions UI de `.avqn/STACK.md` (shadcn imposé, palette neutre noir/blanc/gris, Tailwind 4 sans config externe).
+- **MCP `context7`** (Upstash, `.mcp.json`) — sert les docs à jour des libs (Next 16, Better Auth, Drizzle, Tailwind 4). À invoquer en cas de doute sur l'API d'une lib récente plutôt que se fier à la mémoire pré-entraînée.
 
 ## Comportement hors workflow
 
-Si la demande utilisateur ne correspond à aucune des trois commandes :
+Si la demande utilisateur ne correspond à aucune des cinq commandes :
 
-- **Bug urgent** → correctif direct, commit `fix:`, push, entrée `.avqn/DECISIONS.md` si notable.
 - **Question / exploration** → répondre sans toucher au code.
 - **Refactor / nouvelle feature** → orienter vers `/plan-feature`.
+- **Bug à corriger** → orienter vers `/fix [description]`.
 - **Installer un framework lourd (Spec-Kit, Superpowers, etc.)** → refuser, suggérer la phase 2 AVQN.

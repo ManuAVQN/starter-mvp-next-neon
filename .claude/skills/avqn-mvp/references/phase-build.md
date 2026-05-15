@@ -16,7 +16,14 @@ Implémenter la feature en suivant strictement le brief technique (partie 2 de l
 
 Si la fiche n'existe pas, refuser et orienter vers `/plan-feature`.
 
-### Étape 2 — Annonce du plan d'action
+### Étape 2 — Vérifications avant code
+
+Avant d'annoncer le plan, faire deux check rapides :
+
+- **Doute sur une API ?** Si le brief touche à Next 16, Better Auth 1.6, Drizzle 0.45, Tailwind 4, ou toute lib dont la dernière API peut différer de la mémoire pré-entraînée → invoquer `context7` pour récupérer la doc à jour. Préférer un check explicite à une hallucination silencieuse.
+- **Travail UI ?** Si la feature touche à l'interface, **encadrer mentalement** `frontend-design` (ce skill peut s'activer en parallèle) avec les contraintes de `.avqn/STACK.md` : composants `components/ui/` (shadcn préset `nova`) imposés, palette neutre noir/blanc/gris, pas de dark mode, Tailwind 4 sans `tailwind.config.ts`. Ne pas laisser inventer un système de design parallèle.
+
+### Étape 3 — Annonce du plan d'action
 
 Avant d'écrire du code, annoncer brièvement le plan :
 
@@ -28,7 +35,7 @@ Avant d'écrire du code, annoncer brièvement le plan :
 >
 > Je commence maintenant.
 
-### Étape 3 — Implémentation
+### Étape 4 — Implémentation
 
 Suivre l'ordre du plan d'action. Pour chaque étape :
 
@@ -37,7 +44,7 @@ Suivre l'ordre du plan d'action. Pour chaque étape :
 3. Préférer les composants shadcn existants à la création de composants custom
 4. Préférer les patterns du starter kit aux patterns "inventés"
 
-### Étape 4 — Gestion des imprévus
+### Étape 5 — Gestion des imprévus
 
 Si une décision non prévue dans la fiche surgit, **s'arrêter et demander**. Exemples :
 
@@ -52,26 +59,31 @@ Formulation type :
 
 Une fois la décision prise, elle ira dans la fiche (partie 3) en phase ship.
 
-### Étape 5 — Migration Drizzle (si applicable)
+### Étape 6 — Migration Drizzle (si applicable)
 
 Si la feature touche au schéma de DB :
-1. Modifier le fichier de schéma
-2. Lancer `pnpm db:generate` pour créer la migration
+
+1. Modifier le fichier de schéma dans `db/schema/`
+2. **Avant `db:push`, garde-fou destructif** : si la modification supprime une colonne, supprime une table, ou change un type incompatible (ex: `text` → `integer`), **s'arrêter et avertir** :
+
+   > Attention, cette modification du schéma est destructive : [détail]. Comme on est en MVP avec une seule DB partagée avec la prod, les données existantes vont être [perdues / coercées]. Voulez-vous que je continue malgré tout ? Sinon je peux proposer une migration progressive (ajout d'une nouvelle colonne, backfill, suppression dans une feature ultérieure).
+
 3. Lancer `pnpm db:push` pour appliquer
 4. Si erreur, la résoudre avant de continuer
 
-**Ne pas oublier** : on est en MVP, une seule DB. La migration est appliquée directement, pas de versioning multi-environnement.
+**Ne pas oublier** : on est en MVP, une seule DB, **pas de rollback**. Un `db:push` cassant casse la prod immédiatement (l'app continue de tourner sur le déploiement Vercel courant, mais la DB est dans un nouvel état).
 
-### Étape 6 — Vérification rapide
+### Étape 7 — Vérification rapide
 
 Une fois l'implémentation terminée, faire un dernier passage mental :
 - Tous les critères de fini de la fiche sont-ils couverts ?
 - Y a-t-il du code mort, des imports inutilisés ?
 - Les conventions de nommage sont-elles respectées ?
+- **Surfaces partagées impactées ?** Si la feature touche au layout, à la navigation, à l'auth, à un composant `components/ui/` partagé ou à un schéma déjà utilisé ailleurs, l'identifier explicitement maintenant pour le signaler à l'utilisateur lors du test (anti-régression).
 
 Pas besoin de lancer lint/typecheck à ce stade, ce sera fait en phase ship.
 
-### Étape 7 — Remise à l'utilisateur pour test
+### Étape 8 — Remise à l'utilisateur pour test
 
 Annoncer la fin :
 
@@ -83,6 +95,7 @@ Annoncer la fin :
 >    - [critère 1]
 >    - [critère 2]
 >    - [critère 3]
+> 4. **Vérification anti-régression** (si surfaces partagées impactées) : retestez aussi [parcours impactés, ex: "le login/logout", "la page dashboard", "la navigation principale"].
 >
 > Quand vous avez vérifié que tout fonctionne, lancez `/ship-feature [NN]` pour livrer la feature. Si quelque chose ne va pas, dites-moi ce qui cloche et je corrige.
 
