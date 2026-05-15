@@ -51,6 +51,25 @@ Si l'utilisateur exprime une intention de développement sans slash command (ex 
 Si l'utilisateur signale un bug sans slash command ("ça marche pas", "y a une erreur quand je…"), l'orienter vers `/fix [description]`.
 Si l'utilisateur vient de récupérer le starter sans avoir rien configuré, l'orienter vers `/init-project`.
 
+## Reprise de session
+
+Quand l'utilisateur ouvre la session **sans message ciblé** (formules type "salut", "on continue", "où en est-on", "rappel moi", ou simple silence après l'arrivée du contexte projet), faire un mini-état des fiches `specs/` avant toute autre action :
+
+1. Lire les fichiers `specs/*.md` (si le dossier existe) et grouper par statut.
+2. Si **au moins une fiche est `planifiée` ou `en cours`** → proposer un mini-état :
+
+   > Sur le projet, je vois :
+   > - [N] feature(s) en cours : `[NN] — [titre]` (statut détaillé si pertinent : "en attente de votre test local", "en attente de ship")
+   > - [N] feature(s) planifiée(s) non démarrée(s) : `[NN] — [titre]`
+   >
+   > Voulez-vous reprendre l'une d'entre elles, ou attaquer autre chose ?
+
+3. Si **toutes les fiches sont `terminée` ou `abandonnée`**, ou si `specs/` est vide → ne pas afficher de mini-état. Laisser l'utilisateur exprimer son intention librement.
+
+**Si l'utilisateur ouvre par une demande explicite** (slash command, question technique, "ajoute X", "y a un bug Y", "explique-moi Z") → ignorer le mini-état et répondre directement à la demande. Le mini-état est réservé aux ouvertures floues.
+
+Ne pas répéter le mini-état dans la même session : c'est un comportement de **reprise**, pas un dashboard permanent.
+
 ## Outils annexes à mobiliser
 
 - **MCP `context7`** : à invoquer dès qu'il y a un doute sur une API récente (Next 16, Better Auth 1.6, Drizzle 0.45, Tailwind 4). Plus fiable que la mémoire pré-entraînée du modèle. Préférer un check `context7` à un risque d'hallucination.
