@@ -12,6 +12,9 @@ type Props = {
   defaultValues: { firstName: string; lastName: string; email: string }
 }
 
+// Email is displayed read-only — changing it requires a verification flow
+// (Better Auth's changeEmail) which is out of scope for V1.
+
 export function ProfileForm({ defaultValues }: Props) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
@@ -44,7 +47,7 @@ export function ProfileForm({ defaultValues }: Props) {
       </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>
-        <Input id="email" name="email" type="email" defaultValue={defaultValues.email} required />
+        <Input id="email" type="email" value={defaultValues.email} disabled readOnly />
       </div>
       {message && (
         <Alert variant={message.type === "error" ? "destructive" : "default"}>

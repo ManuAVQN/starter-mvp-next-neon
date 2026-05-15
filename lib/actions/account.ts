@@ -11,7 +11,6 @@ import { user } from "@/db/schema"
 const profileSchema = z.object({
   firstName: z.string().min(1, "Le prénom est requis"),
   lastName: z.string().min(1, "Le nom est requis"),
-  email: z.string().email("Email invalide"),
 })
 
 const passwordSchema = z
@@ -34,14 +33,13 @@ export async function updateProfile(formData: FormData): Promise<ActionResult> {
   const parsed = profileSchema.safeParse({
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
-    email: formData.get("email"),
   })
 
   if (!parsed.success) {
     return { success: false, error: parsed.error.issues[0]?.message ?? "Données invalides" }
   }
 
-  const { firstName, lastName, email } = parsed.data
+  const { firstName, lastName } = parsed.data
 
   await db
     .update(user)
@@ -49,7 +47,6 @@ export async function updateProfile(formData: FormData): Promise<ActionResult> {
       firstName,
       lastName,
       name: `${firstName} ${lastName}`,
-      email,
       updatedAt: new Date(),
     })
     .where(eq(user.id, session.user.id))
