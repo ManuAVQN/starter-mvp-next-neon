@@ -45,7 +45,7 @@ Si l'utilisateur exprime une intention de développement sans slash command (ex 
 
 ## Commandes complémentaires (hors workflow MVP)
 
-- **`/init-project`** → `.claude/commands/init-project.md`. Setup initial du projet après dezip du starter (PRODUCT.md, branding, `.env.local`, premier commit). À lancer une seule fois.
+- **`/init-project`** → `.claude/commands/init-project.md`. Setup initial complet du projet après dezip du starter (pnpm install, branding, PRODUCT.md, `.env.local`, db:push, premier commit, création du repo GitHub via `gh` CLI). À lancer une seule fois. Prérequis CLI : `pnpm` + `gh` authentifié.
 - **`/fix [description]`** → `.claude/commands/fix.md`. Correctif rapide pour un bug, sans fiche `specs/` ni numéro de feature.
 
 Si l'utilisateur signale un bug sans slash command ("ça marche pas", "y a une erreur quand je…"), l'orienter vers `/fix [description]`.
@@ -109,7 +109,7 @@ Si l'utilisateur demande d'installer Spec-Kit, Superpowers ou un autre framework
 
 À chaque action significative, mettre à jour les documents pertinents :
 
-- `/init-project` → remplit `.avqn/PRODUCT.md`, modifie `lib/config.ts`, peut créer `.env.local`
+- `/init-project` → installe les deps, remplit `.avqn/PRODUCT.md`, modifie `lib/config.ts`, crée `.env.local` (avec aide), pousse le schéma DB, crée le repo GitHub et y push le premier commit
 - `/plan-feature` → crée `specs/[NN]-[slug].md`
 - `/build-feature` → met à jour le statut dans la fiche, ne touche pas à `.avqn/DECISIONS.md`
 - `/ship-feature` → complète la partie 3 de la fiche, ajoute une entrée à `.avqn/DECISIONS.md` si décision notable, commit + push

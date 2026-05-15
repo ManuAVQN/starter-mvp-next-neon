@@ -8,7 +8,7 @@ Le repo embarque un skill Claude Code (`avqn-mvp`) et cinq slash commands qui pi
 
 | Commande | Rôle |
 |---|---|
-| `/init-project` | Setup initial du projet après dezip du starter : branding, `PRODUCT.md`, `.env.local`, premier commit. À lancer une seule fois. |
+| `/init-project` | Setup initial du projet après dezip du starter : `pnpm install`, branding, `PRODUCT.md`, `.env.local`, `db:push`, premier commit, création du repo GitHub via `gh` CLI. À lancer une seule fois. Prérequis : `pnpm` et `gh` installés et `gh auth login` fait. |
 | `/plan-feature [description]` | Phase 1 — Génère une fiche de feature dans `specs/[NN]-[slug].md` après questions produit + techniques. Pas de code écrit à ce stade. |
 | `/build-feature [NN]` | Phase 2 — Implémente la feature en suivant strictement la fiche. S'arrête pour test manuel utilisateur. |
 | `/ship-feature [NN]` | Phase 3 — Lint + typecheck, met à jour la fiche, commit unique `feat: [NN] ...`, push sur `main`. |
@@ -30,6 +30,7 @@ Le MCP context7 est configuré sans clé API (tier public, rate-limited). Pour d
 
 - Node.js 20+
 - pnpm (`npm i -g pnpm`)
+- GitHub CLI (`brew install gh` sur macOS — voir https://cli.github.com/ ailleurs) authentifié via `gh auth login`. Utilisé par `/init-project` pour créer automatiquement le repo distant.
 - Un compte [Neon](https://neon.tech) (base de données Postgres serverless)
 - Un compte [Resend](https://resend.com) (envoi d'emails transactionnels)
 - Un compte [Vercel](https://vercel.com) (pour le déploiement)

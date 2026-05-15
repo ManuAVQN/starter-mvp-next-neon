@@ -11,30 +11,57 @@ $ARGUMENTS
 
 Transformer le starter générique en un projet client identifiable, en **une seule passe** juste après le dezip du starter AVQN :
 
+- Dépendances installées
 - Nom et description (`lib/config.ts`)
 - Vision et descriptif fonctionnel (`.avqn/PRODUCT.md`)
 - Variables d'environnement (`.env.local`)
-- Premier commit du projet
+- Schéma de base de données poussé
+- Premier commit
+- Repo GitHub créé et code poussé
 
 À la fin, le client peut lancer `/plan-feature` pour démarrer sa première fonctionnalité.
 
 ## Pré-flight
 
-### Étape 1 — État du projet
+### Étape 1 — Prérequis et état du projet
 
-Vérifier silencieusement :
+**Vérifier d'abord les prérequis CLI** :
+
+```bash
+pnpm --version    # doit retourner une version
+gh --version      # doit retourner une version
+gh auth status    # doit confirmer un compte authentifié
+```
+
+Si l'un échoue, **arrêter ici** et présenter à l'utilisateur les instructions d'installation manquantes :
+
+| Manquant | Solution |
+|---|---|
+| `pnpm` non installé | `npm i -g pnpm` |
+| `gh` non installé | `brew install gh` sur macOS, ou voir https://cli.github.com/ pour les autres OS |
+| `gh` non authentifié | `gh auth login` (suivre l'assistant interactif, choisir HTTPS ou SSH selon préférence) |
+
+Puis :
+
+> Une fois ces outils prêts, relancez `/init-project`.
+
+**Si tout est OK**, faire l'état du projet :
 
 1. `lib/config.ts` — `APP_NAME` vaut-il toujours `"AVQN Starter"` ?
 2. `.avqn/PRODUCT.md` — contient-il les placeholders `[Remplissez ici]` ?
 3. `.env.local` — existe-t-il ? Contient-il toutes les variables de `.env.example` ?
 4. `git log --oneline` — y a-t-il déjà des commits du client (au-delà du commit du starter) ?
+5. `git remote -v` — un remote `origin` est-il déjà configuré ?
+6. `ls node_modules/` — les dépendances sont-elles déjà installées ?
 
 Construire un mini-rapport à montrer à l'utilisateur :
 
 > Avant de démarrer, voici l'état du projet :
+> - Dépendances : [installées / à installer]
 > - Branding (`lib/config.ts`) : [par défaut / déjà modifié]
 > - PRODUCT.md : [vide / partiellement rempli / déjà rempli]
 > - `.env.local` : [absent / présent mais incomplet / complet]
+> - Remote git : [absent / déjà configuré sur (URL)]
 > - Historique git : [starter intact / commits déjà en place]
 >
 > Voulez-vous que je vous accompagne pour finaliser cette initialisation ?
@@ -45,7 +72,19 @@ Construire un mini-rapport à montrer à l'utilisateur :
 
 ## Déroulé
 
-### Étape 2 — Branding (`lib/config.ts`)
+### Étape 2 — Installation des dépendances
+
+Si `node_modules/` est absent ou incomplet, lancer `pnpm install` **en background** pour ne pas bloquer la suite des questions :
+
+```bash
+pnpm install
+```
+
+Continuer immédiatement vers les étapes suivantes. Avant l'étape 6 (`db:push`), vérifier que `pnpm install` s'est terminé sans erreur. Si erreur, la diagnostiquer avec le client avant de continuer.
+
+Si `node_modules/` est déjà présent, passer directement à l'étape 3.
+
+### Étape 3 — Branding (`lib/config.ts`)
 
 Demander en une salve :
 
@@ -55,7 +94,7 @@ Demander en une salve :
 
 Puis modifier `lib/config.ts` avec les valeurs reçues.
 
-### Étape 3 — Vision produit (`.avqn/PRODUCT.md`)
+### Étape 4 — Vision produit (`.avqn/PRODUCT.md`)
 
 Annoncer :
 
@@ -85,7 +124,7 @@ Si l'utilisateur répond vaguement, demander une précision avant de noter. Si u
 
 À la fin, **ne pas régénérer PRODUCT.md en écrasant le template**. Lire le fichier, repérer les sections, remplacer uniquement les placeholders `[Remplissez ici]` (et équivalents) par les réponses recueillies. Conserver les en-têtes et les notes en blockquote du template.
 
-### Étape 4 — Variables d'environnement (`.env.local`)
+### Étape 5 — Variables d'environnement (`.env.local`)
 
 Lister les variables de `.env.example` qui sont manquantes ou vides dans `.env.local`. Pour chacune, fournir au client un guide d'obtention :
 
@@ -99,17 +138,19 @@ Lister les variables de `.env.example` qui sont manquantes ou vides dans `.env.l
 
 **Ne pas écrire les secrets pour le client** — c'est à lui de les coller dans `.env.local`. Lui demander de confirmer quand c'est fait.
 
-Si l'utilisateur n'a pas encore créé ses comptes Neon / Resend / Vercel, lui suggérer de le faire avant de continuer (ou de revenir lancer `/init-project` plus tard).
+Si l'utilisateur n'a pas encore créé ses comptes Neon / Resend, lui suggérer de le faire avant de continuer (ou de revenir lancer `/init-project` plus tard).
 
-### Étape 5 — Vérification de la base de données
+### Étape 6 — Vérification de la base de données
 
-Une fois `.env.local` complété :
+**Pré-requis** : vérifier que `pnpm install` (lancé à l'étape 2) s'est terminé sans erreur. Si encore en cours, attendre. Si erreur, diagnostiquer avant de continuer.
+
+Une fois `.env.local` complété et les dépendances installées :
 
 > Je vais maintenant pousser le schéma initial sur votre base Neon. Ça va créer les tables d'authentification (user, session, account, verification).
 
 Lancer `pnpm db:push`. Si erreur (connexion refusée, mauvais URL), diagnostiquer avec le client.
 
-### Étape 6 — Premier commit
+### Étape 7 — Premier commit
 
 Vérifier l'état git :
 
@@ -117,37 +158,73 @@ Vérifier l'état git :
 git status
 ```
 
-Si le starter est intact (juste les fichiers de base), faire un commit unique pour matérialiser le démarrage du projet client :
+Si le starter est intact (juste les fichiers de base modifiés à l'init), faire un commit unique pour matérialiser le démarrage du projet client :
 
 ```
 chore: initialisation du projet à partir du starter AVQN
 ```
 
-Si l'utilisateur a déjà commité des choses, ne pas en faire un commit séparé : intégrer les modifs (`lib/config.ts`, `.avqn/PRODUCT.md`) dans son flux normal et lui laisser commiter à sa main.
+Si l'utilisateur a déjà commité des choses, ne pas en faire un commit séparé : intégrer les modifs (`lib/config.ts`, `.avqn/PRODUCT.md`) dans son flux normal et lui laisser commiter à sa main, puis passer à l'étape 8.
 
-**Push :** ne pas pousser automatiquement. L'utilisateur doit avoir configuré le remote GitHub et lié Vercel avant. Lui demander :
+### Étape 8 — Création du repo GitHub
 
-> Avez-vous déjà créé le repo GitHub et lié le projet à Vercel ? Si non, je peux vous guider. Si oui, dites-moi quand vous êtes prêt à pousser.
+Demander à l'utilisateur :
 
-### Étape 7 — Confirmation
+> Pour publier le projet sur GitHub :
+> 1. Quel nom voulez-vous pour le repo ? (kebab-case recommandé, par exemple `acme-pay`)
+> 2. Le repo sera créé en **privé** par défaut. C'est OK, ou vous préférez public ?
 
-> ✅ Initialisation terminée.
+**Valider le nom** :
+- Lettres, chiffres, tirets ou underscores uniquement
+- Pas d'espaces, pas de caractères spéciaux
+- Si invalide, redemander en expliquant la règle
+
+Une fois validé, créer le repo et pousser :
+
+```bash
+gh repo create [name] --private --source=. --push
+```
+
+(remplacer `--private` par `--public` si l'utilisateur l'a explicitement demandé)
+
+**Si la commande échoue** :
+- **Repo déjà existant** (`name already exists on this account`) → demander un autre nom, ou proposer de cibler le repo existant manuellement
+- **Erreur réseau** → relancer
+- **Erreur de permission** → vérifier `gh auth status` et l'organisation cible
+
+Une fois le repo créé avec succès, récupérer son URL :
+
+```bash
+gh repo view --json url -q .url
+```
+
+Garder cette URL pour la confirmation finale.
+
+### Étape 9 — Confirmation
+
+> Initialisation terminée.
 >
+> - Dépendances installées (`pnpm install`)
 > - `lib/config.ts` : branding mis à jour ([APP_NAME])
 > - `.avqn/PRODUCT.md` : rempli avec votre vision
 > - `.env.local` : [statut]
-> - Base de données : [statut]
+> - Base de données : schéma poussé sur Neon
 > - Commit `chore: initialisation du projet à partir du starter AVQN` créé
+> - Repo GitHub : [URL] (privé)
 >
-> Pour démarrer votre première fonctionnalité, lancez `/plan-feature` suivi d'une description courte. Pensez à vous appuyer sur le backlog que vous venez de remplir.
+> Prochaines étapes manuelles à votre charge :
+> 1. **Lier le repo à Vercel** pour activer le déploiement automatique : https://vercel.com/new (importer le repo, puis configurer les mêmes variables d'environnement que dans `.env.local`)
+> 2. Pour démarrer votre première fonctionnalité, lancez `/plan-feature` suivi d'une description courte. Inspirez-vous du backlog que vous venez de remplir.
 
 ## Anti-patterns à éviter
 
+- Lancer la commande sans avoir vérifié les prérequis CLI (`pnpm`, `gh`, `gh auth`)
 - Écraser un `PRODUCT.md` déjà rempli sans demander
 - Écrire des secrets dans `.env.local` (c'est au client de les coller)
-- Pousser sur GitHub automatiquement (le remote peut ne pas être configuré)
+- Créer le repo GitHub avant le premier commit (le `--push` aurait rien à pousser)
+- Accepter un nom de repo avec espaces ou caractères spéciaux
 - Inventer des réponses à la place du client pour PRODUCT.md (si manquant → "À compléter ultérieurement")
-- Enchaîner directement sur `/plan-feature` (l'utilisateur doit avoir le temps de relire son PRODUCT.md)
+- Enchaîner directement sur `/plan-feature` (l'utilisateur doit avoir le temps de relire son PRODUCT.md et de lier Vercel)
 
 ## Cas particulier — projet déjà partiellement initialisé
 
@@ -156,3 +233,4 @@ Si le client lance `/init-project` alors que des modifs sont déjà en place :
 1. Présenter le rapport d'état (étape 1) en détaillant ce qui est fait
 2. Proposer un mode "compléter uniquement" : remplir les trous, ne pas écraser le reste
 3. Demander confirmation avant chaque écriture sur un fichier déjà modifié
+4. Si un remote `origin` est déjà configuré, ne pas tenter `gh repo create` — le signaler et passer
