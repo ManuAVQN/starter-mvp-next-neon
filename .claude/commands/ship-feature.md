@@ -4,10 +4,26 @@ description: Finalise et livre une feature (phase 3 du workflow AVQN)
 
 # Phase 3 — Livrer une feature
 
-Numéro de la feature à livrer (fourni par l'utilisateur) :
+Numéro de la feature à livrer (optionnel — fourni par l'utilisateur) :
 $ARGUMENTS
 
-Si l'argument est vide, demande à l'utilisateur quelle feature livrer et liste les fiches en statut "en cours" dans `specs/`.
+## Résolution du numéro de feature
+
+Avant de démarrer le déroulé, déterminer la fiche cible selon trois niveaux de priorité, dans l'ordre :
+
+1. **Argument explicite** — si `$ARGUMENTS` contient un numéro, l'utiliser directement. Permet de livrer une feature dont l'implémentation date de plus tôt.
+
+2. **Contexte conversationnel** — si une feature vient d'être buildée ou activement discutée dans la session courante, l'utiliser, mais **confirmer brièvement** avant de démarrer :
+
+   > Je vais livrer la feature [NN] — [titre], qu'on vient d'implémenter. On y va ?
+
+   Attendre l'accord explicite avant de continuer.
+
+3. **Aucun contexte** — ne **pas** auto-choisir la plus récente. Lister les fiches en statut "en cours" dans `specs/` avec leur numéro et titre, puis demander :
+
+   > Quelle feature souhaitez-vous livrer ?
+
+   Attendre la réponse. S'il n'y a aucune fiche en statut "en cours", signaler à l'utilisateur (ex : "Aucune feature n'est en statut 'en cours'. Souhaitez-vous reprendre une feature avec `/build-feature [NN]` ?").
 
 ## Objectif
 

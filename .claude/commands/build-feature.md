@@ -4,10 +4,26 @@ description: Implémente une feature planifiée (phase 2 du workflow AVQN)
 
 # Phase 2 — Implémenter une feature
 
-Numéro de la feature à implémenter (fourni par l'utilisateur) :
+Numéro de la feature à implémenter (optionnel — fourni par l'utilisateur) :
 $ARGUMENTS
 
-Si l'argument est vide, demande à l'utilisateur quelle feature implémenter (ex : "01", "03") et liste les fiches disponibles dans `specs/` avec leur statut.
+## Résolution du numéro de feature
+
+Avant de démarrer le déroulé, déterminer la fiche cible selon trois niveaux de priorité, dans l'ordre :
+
+1. **Argument explicite** — si `$ARGUMENTS` contient un numéro, l'utiliser directement et passer à l'étape 1 du déroulé. Permet de reprendre une feature plus ancienne sans ambiguïté.
+
+2. **Contexte conversationnel** — si une feature vient d'être planifiée ou activement discutée dans la session courante (fiche créée ou ouverte juste avant), l'utiliser, mais **confirmer brièvement** avant de démarrer :
+
+   > Je vais implémenter la feature [NN] — [titre], qu'on vient de planifier. On y va ?
+
+   Attendre l'accord explicite avant de continuer.
+
+3. **Aucun contexte** — ne **pas** auto-choisir la plus récente. Lister les fiches en statut "planifiée" ou "en cours" dans `specs/` avec leur numéro et titre, puis demander :
+
+   > Quelle feature souhaitez-vous reprendre ?
+
+   Attendre la réponse de l'utilisateur. S'il n'y a aucune fiche candidate, orienter vers `/plan-feature`.
 
 ## Objectif
 
