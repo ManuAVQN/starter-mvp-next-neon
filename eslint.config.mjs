@@ -14,7 +14,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // shadcn-managed files (do not edit):
     "components/ui/**",
-    "hooks/**",
+    "hooks/use-mobile.ts",
   ]),
 ]);
 
