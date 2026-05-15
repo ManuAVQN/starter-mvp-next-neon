@@ -519,7 +519,7 @@ export const authClient = createAuthClient({
   plugins: [inferAdditionalFields<typeof auth>()],
 })
 
-export const { signIn, signUp, signOut, useSession, sendVerificationEmail, forgetPassword, resetPassword } = authClient
+export const { signIn, signUp, signOut, useSession, sendVerificationEmail, requestPasswordReset, resetPassword } = authClient
 ```
 
 - [ ] **Step 4: Create the Route Handler `app/api/auth/[...all]/route.ts`**
@@ -1523,7 +1523,7 @@ export function ForgotForm() {
       return
     }
 
-    const { error } = await authClient.forgetPassword({
+    const { error } = await authClient.requestPasswordReset({
       email: parsed.data.email,
       redirectTo: "/reset-password",
     })
