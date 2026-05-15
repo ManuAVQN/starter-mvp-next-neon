@@ -62,17 +62,28 @@ Pause humaine **obligatoire** entre chaque phase. L'utilisateur valide avant de 
 
 ```
 app/                  # routes Next.js (App Router)
+  (public)/           # routes publiques
+  (auth)/             # sign-in, sign-up, reset, etc.
+  (app)/              # routes protégées
+  api/                # Route Handlers (auth only)
 components/
-  ui/                 # composants shadcn (ne pas modifier sauf cas exceptionnel)
+  ui/                 # composants shadcn (ne pas modifier)
   [...]               # composants custom du projet
 db/
-  schema/             # schémas Drizzle
-  migrations/         # généré automatiquement par drizzle-kit
-lib/                  # utilitaires partagés
-docs/                 # documentation projet
-  PRODUCT.md          # vision et descriptif fonctionnel
-  STACK.md            # détails techniques
-specs/                # fiches de features (gérées par avqn-mvp)
+  schema/             # schémas Drizzle (auth déjà fourni)
+emails/               # templates React Email
+lib/
+  actions/            # Server Actions
+  auth.ts             # config Better Auth (serveur)
+  auth-client.ts      # config Better Auth (client)
+  email.ts            # helpers Resend
+  config.ts           # APP_NAME, APP_DESCRIPTION (à modifier pour rebranding)
+  utils.ts            # cn()
+docs/
+  PRODUCT.md          # vision et descriptif fonctionnel (à remplir)
+  STACK.md            # détails techniques (figé)
+specs/                # fiches de features (gérées par /plan-feature, /build-feature, /ship-feature)
+proxy.ts              # protection des routes (app)/ — Next 16 convention
 DECISIONS.md          # journal des décisions techniques
 ```
 
@@ -111,6 +122,12 @@ DECISIONS.md          # journal des décisions techniques
 - Lancer `pnpm dev` à la place de l'utilisateur (c'est lui qui teste)
 - Skipper le lint ou désactiver des règles pour gagner du temps
 - Mélanger plusieurs features dans un même commit
+
+---
+
+## Rebranding rapide
+
+Pour adapter le starter à votre projet : ouvrez `lib/config.ts` et modifiez `APP_NAME` et `APP_DESCRIPTION`. Tous les écrans (navbar, sidebar, homepage, sign-up, metadata) se mettent à jour automatiquement.
 
 ---
 

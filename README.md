@@ -1,6 +1,20 @@
 # AVQN Starter Kit
 
-Un starter Next.js minimal et moderne pour démarrer rapidement des projets MVP. Authentification complète, base de données, emails transactionnels, dashboard prêt à l'emploi.
+Un starter Next.js **agentic-ready** pour démarrer rapidement des projets MVP avec Claude Code. Authentification complète, base de données, emails transactionnels, dashboard prêt à l'emploi — et un workflow de développement assisté par IA en 3 phases déjà câblé.
+
+## Workflow agentic intégré
+
+Le repo embarque un skill Claude Code (`avqn-mvp`) et trois slash commands qui pilotent un workflow MVP simple :
+
+| Commande | Phase | Rôle |
+|---|---|---|
+| `/plan-feature [description]` | 1 — Planifier | Génère une fiche de feature dans `specs/[NN]-[slug].md` après questions produit + techniques. Pas de code écrit à ce stade. |
+| `/build-feature [NN]` | 2 — Implémenter | Implémente la feature en suivant strictement la fiche. S'arrête pour test manuel utilisateur. |
+| `/ship-feature [NN]` | 3 — Livrer | Lint + typecheck, met à jour la fiche, commit unique `feat: [NN] ...`, push sur `main`. |
+
+Le skill s'active automatiquement à la présence d'`AGENTS.md` à la racine. Aucune installation manuelle requise : ouvrez le repo dans Claude Code et les commandes sont disponibles.
+
+Détails du workflow dans `.claude/skills/avqn-mvp/SKILL.md` et ses références.
 
 ## Prérequis
 
@@ -64,22 +78,32 @@ L'app est disponible sur [http://localhost:3000](http://localhost:3000).
 ## Structure du projet
 
 ```
-app/                  Pages Next.js (App Router)
-  (public)/           Routes publiques (home)
-  (auth)/             Routes d'authentification
-  (app)/              Routes protégées (dashboard, settings)
-  api/auth/           Route Handler Better Auth
-components/           Composants partagés (navbar, sidebar, user-menu)
-  ui/                 Composants shadcn/ui (ne pas modifier)
-db/                   Drizzle ORM
-  schema/             Tables (auth)
-emails/               Templates React Email
-lib/                  Logique métier
-  actions/            Server Actions
-  auth.ts             Config Better Auth (serveur)
-  auth-client.ts      Config Better Auth (client)
-  email.ts            Helpers Resend
-middleware.ts         Protection des routes (app)/
+.claude/                    Infrastructure agentic (livrée avec le repo)
+  skills/avqn-mvp/          Skill Claude Code activé par AGENTS.md
+  commands/                 /plan-feature, /build-feature, /ship-feature
+app/                        Pages Next.js (App Router)
+  (public)/                 Routes publiques (home)
+  (auth)/                   Routes d'authentification
+  (app)/                    Routes protégées (dashboard, settings)
+  api/auth/                 Route Handler Better Auth
+components/                 Composants partagés (navbar, sidebar, user-menu)
+  ui/                       Composants shadcn/ui (ne pas modifier)
+db/                         Drizzle ORM
+  schema/                   Tables (auth)
+emails/                     Templates React Email
+lib/                        Logique métier
+  actions/                  Server Actions
+  auth.ts                   Config Better Auth (serveur)
+  auth-client.ts            Config Better Auth (client)
+  email.ts                  Helpers Resend
+  config.ts                 APP_NAME + APP_DESCRIPTION (branding)
+docs/
+  PRODUCT.md                Vision et descriptif fonctionnel (à remplir)
+  STACK.md                  Détails techniques (figé)
+specs/                      Fiches de features (créées par /plan-feature)
+AGENTS.md                   Conventions du projet (lu par Claude au démarrage)
+DECISIONS.md                Journal des décisions techniques
+proxy.ts                    Protection des routes (app)/ (Next 16)
 ```
 
 ## Scripts disponibles
