@@ -14,7 +14,7 @@ Si l'argument est vide, demande à l'utilisateur quelle feature livrer et liste 
 Rappels critiques :
 - Lancer `pnpm lint` et `pnpm typecheck` (ou équivalents), corriger jusqu'à ce que tout passe
 - Mettre à jour la fiche `specs/[NN]-[slug].md` : statut "terminée", date de fin, partie 3 remplie
-- Ajouter une entrée à `DECISIONS.md` si la feature contient des décisions techniques notables
+- Ajouter une entrée à `.avqn/DECISIONS.md` si la feature contient des décisions techniques notables
 - Commit unique avec message `feat: [NN] [titre court]`
 - Push sur main
 - Confirmer la livraison à l'utilisateur avec le lien Vercel

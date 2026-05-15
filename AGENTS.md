@@ -19,7 +19,7 @@ Ce projet utilise le **starter kit AVQN** et suit la méthodologie AVQN MVP (ski
 
 **Ne pas changer cette stack** sans demander explicitement à l'utilisateur. Toute nouvelle dépendance doit être validée avant installation.
 
-Voir `docs/STACK.md` pour les conventions techniques détaillées.
+Voir `.avqn/STACK.md` pour les conventions techniques détaillées.
 
 ---
 
@@ -79,12 +79,12 @@ lib/
   email.ts            # helpers Resend
   config.ts           # APP_NAME, APP_DESCRIPTION (à modifier pour rebranding)
   utils.ts            # cn()
-docs/
+.avqn/
   PRODUCT.md          # vision et descriptif fonctionnel (à remplir)
   STACK.md            # détails techniques (figé)
+  DECISIONS.md        # journal des décisions techniques
 specs/                # fiches de features (gérées par /plan-feature, /build-feature, /ship-feature)
 proxy.ts              # protection des routes (app)/ — Next 16 convention
-DECISIONS.md          # journal des décisions techniques
 ```
 
 ### Composants
@@ -115,7 +115,7 @@ DECISIONS.md          # journal des décisions techniques
 
 ## Ce qu'il ne faut pas faire
 
-- Modifier `AGENTS.md`, `docs/PRODUCT.md` ou `docs/STACK.md` sans demander à l'utilisateur
+- Modifier `AGENTS.md`, `.avqn/PRODUCT.md` ou `.avqn/STACK.md` sans demander à l'utilisateur
 - Créer des branches
 - Configurer des environnements de preview
 - Installer des dépendances sans validation

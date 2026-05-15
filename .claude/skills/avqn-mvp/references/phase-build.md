@@ -12,7 +12,7 @@ Implémenter la feature en suivant strictement le brief technique (partie 2 de l
 
 1. Lire `specs/[NN]-[slug].md` (la fiche de la feature)
 2. Lire `AGENTS.md` pour les conventions
-3. Lire `docs/STACK.md` pour les patterns techniques
+3. Lire `.avqn/STACK.md` pour les patterns techniques
 4. Mettre à jour la fiche : statut "en cours", date de démarrage
 
 Si la fiche n'existe pas, refuser et orienter vers `/plan-feature`.

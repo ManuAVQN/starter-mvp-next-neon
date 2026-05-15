@@ -97,12 +97,13 @@ lib/                        Logique métier
   auth-client.ts            Config Better Auth (client)
   email.ts                  Helpers Resend
   config.ts                 APP_NAME + APP_DESCRIPTION (branding)
-docs/
+.avqn/                      Convention pack AVQN
   PRODUCT.md                Vision et descriptif fonctionnel (à remplir)
   STACK.md                  Détails techniques (figé)
+  DECISIONS.md              Journal des décisions techniques
 specs/                      Fiches de features (créées par /plan-feature)
 AGENTS.md                   Conventions du projet (lu par Claude au démarrage)
-DECISIONS.md                Journal des décisions techniques
+CLAUDE.md                   Entry point Claude Code
 proxy.ts                    Protection des routes (app)/ (Next 16)
 ```
 

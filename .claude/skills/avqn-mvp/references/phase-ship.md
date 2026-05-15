@@ -40,7 +40,7 @@ Compléter `specs/[NN]-[slug].md` :
 - **Partie 3 — Notes post-implémentation** : rédiger 3-6 bullets honnêtes sur :
   - Ce qui a changé par rapport au plan initial (si applicable)
   - Les bugs ou difficultés rencontrés et comment ils ont été résolus
-  - Les choix techniques pris en cours de route (qui doivent aussi aller dans DECISIONS.md)
+  - Les choix techniques pris en cours de route (qui doivent aussi aller dans `.avqn/DECISIONS.md`)
   - Les points d'attention pour le futur (ex : "à reprendre quand on aura plus de 100 users", "le polling toutes les 5s pourra devenir un websocket")
   - Si rien de notable : écrire "Implémentation conforme au plan, aucune décision notable en cours de route."
 
@@ -48,9 +48,9 @@ Cocher les critères de fini quand ils sont validés.
 
 ### Étape 4 — Mise à jour de DECISIONS.md
 
-Si la feature contient des décisions techniques notables (nouveau pattern, choix de lib, alternative écartée), ajouter une entrée dans `DECISIONS.md`. Voir `references/decisions-format.md` pour le format.
+Si la feature contient des décisions techniques notables (nouveau pattern, choix de lib, alternative écartée), ajouter une entrée dans `.avqn/DECISIONS.md`. Voir `references/decisions-format.md` pour le format.
 
-Si aucune décision notable, ne rien ajouter. DECISIONS.md doit rester un document à haute valeur ajoutée, pas un journal exhaustif.
+Si aucune décision notable, ne rien ajouter. `.avqn/DECISIONS.md` doit rester un document à haute valeur ajoutée, pas un journal exhaustif.
 
 ### Étape 5 — Commit
 
@@ -102,7 +102,7 @@ Annoncer le succès :
 - Faire plusieurs commits pour une seule feature (mélange les granularités)
 - Pousser sur une branche autre que `main`
 - Oublier de mettre à jour le statut dans la fiche
-- Spammer DECISIONS.md avec des entrées sans valeur (ex : "j'ai utilisé une div")
+- Spammer `.avqn/DECISIONS.md` avec des entrées sans valeur (ex : "j'ai utilisé une div")
 - Confirmer la livraison avant que le push soit effectivement réussi
 
 ## Cas particuliers

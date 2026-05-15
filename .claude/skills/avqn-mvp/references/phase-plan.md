@@ -10,7 +10,7 @@ Produire un brief d'implémentation complet (la fiche de feature) **sans écrire
 
 ### Étape 1 — Préparation (silencieuse)
 
-1. Lire `AGENTS.md`, `docs/PRODUCT.md`, `docs/STACK.md`
+1. Lire `AGENTS.md`, `.avqn/PRODUCT.md`, `.avqn/STACK.md`
 2. Lister les fichiers de `specs/` pour déterminer le prochain numéro (NN). Format : 01, 02, 03... avec zéro initial jusqu'à 09.
 3. Si `specs/` n'existe pas, le créer.
 
