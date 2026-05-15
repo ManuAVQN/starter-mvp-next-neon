@@ -18,7 +18,7 @@ Produire un brief d'implémentation complet (la fiche de feature) **sans écrire
 ### Étape 1 — Préparation (silencieuse)
 
 1. Lire `.avqn/PRODUCT.md` et `.avqn/STACK.md` (`CLAUDE.md` est déjà en contexte)
-2. Lister les fichiers de `specs/` pour déterminer le prochain numéro (NN). Format : 01, 02, 03... avec zéro initial jusqu'à 09.
+2. Lister les fichiers de `specs/` pour déterminer le prochain numéro (NN). **Pas de limite** au nombre de features — on numérote séquentiellement aussi loin que nécessaire. Format : zero-padding sur 2 chiffres pour les nombres inférieurs à 10 (`01`, `02`, …, `09`, `10`, `11`, …, `42`, …) afin de garantir un tri alphabétique correct dans `specs/`.
 3. Si `specs/` n'existe pas, le créer.
 
 ### Étape 2 — Questions produit
