@@ -13,6 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { APP_NAME } from "@/lib/config"
 
 const items = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -29,7 +30,7 @@ export function SidebarNav() {
     <Sidebar>
       <SidebarHeader className="border-b border-sidebar-border px-4 py-4">
         <Link href="/dashboard" className="text-sm font-semibold">
-          AVQN Starter
+          {APP_NAME}
         </Link>
       </SidebarHeader>
       <SidebarContent>

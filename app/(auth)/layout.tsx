@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { APP_NAME } from "@/lib/config"
 
 export default function AuthLayout({
   children,
@@ -10,7 +11,7 @@ export default function AuthLayout({
       <header className="border-b border-border">
         <div className="mx-auto flex h-16 max-w-6xl items-center px-4">
           <Link href="/" className="text-lg font-semibold">
-            AVQN Starter
+            {APP_NAME}
           </Link>
         </div>
       </header>

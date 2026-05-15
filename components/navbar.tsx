@@ -3,6 +3,7 @@ import { headers } from "next/headers"
 import { auth } from "@/lib/auth"
 import { Button } from "@/components/ui/button"
 import { SignOutButton } from "@/components/sign-out-button"
+import { APP_NAME } from "@/lib/config"
 
 export async function Navbar() {
   const session = await auth.api.getSession({ headers: await headers() })
@@ -11,7 +12,7 @@ export async function Navbar() {
     <header className="border-b border-border bg-background">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link href="/" className="text-lg font-semibold">
-          AVQN Starter
+          {APP_NAME}
         </Link>
         <div className="flex items-center gap-3">
           {session ? (

@@ -1,10 +1,11 @@
 import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
+import { APP_NAME, APP_DESCRIPTION } from "@/lib/config"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "AVQN Starter",
-  description: "Next.js starter kit",
+  title: APP_NAME,
+  description: APP_DESCRIPTION,
 }
 
 export default function RootLayout({

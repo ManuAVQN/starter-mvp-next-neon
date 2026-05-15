@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { SignUpForm } from "./sign-up-form"
+import { APP_NAME } from "@/lib/config"
 
 export default function SignUpPage() {
   return (
@@ -7,7 +8,7 @@ export default function SignUpPage() {
       <div className="space-y-1">
         <h1 className="text-2xl font-semibold">Créer un compte</h1>
         <p className="text-sm text-muted-foreground">
-          Rejoignez AVQN Starter en quelques secondes.
+          Rejoignez {APP_NAME} en quelques secondes.
         </p>
       </div>
       <SignUpForm />
