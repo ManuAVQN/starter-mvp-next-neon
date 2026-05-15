@@ -37,7 +37,13 @@ Implémenter la feature en suivant strictement le brief technique (partie 2 de l
 2. Lire `.avqn/STACK.md` pour les patterns techniques (`CLAUDE.md` est déjà en contexte)
 3. Mettre à jour la fiche : statut "en cours", date de démarrage
 
-Si la fiche n'existe pas, refuser et orienter vers `/plan-feature`.
+Cas particuliers :
+- Si la fiche n'existe pas → refuser et orienter vers `/plan-feature`.
+- Si la fiche est en statut `abandonnée` → ne pas démarrer le build d'office. Demander confirmation :
+
+  > La feature [NN] est marquée comme abandonnée. Voulez-vous la réactiver (statut → "en cours") et lancer l'implémentation, ou est-ce une erreur de cible ?
+
+  Attendre la réponse avant de continuer.
 
 ### Étape 2 — Vérifications avant code
 

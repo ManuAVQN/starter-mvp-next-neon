@@ -33,7 +33,12 @@ Finaliser proprement : qualité du code vérifiée, documentation à jour, code 
 
 ### Étape 1 — Vérification préalable
 
-Vérifier que la feature [NN] est bien en statut "en cours" dans `specs/[NN]-[slug].md`. Si statut "planifiée", refuser et orienter vers `/build-feature`. Si statut "terminée", signaler qu'elle est déjà livrée et orienter vers `/fix` pour un correctif.
+Vérifier le statut de la feature [NN] dans `specs/[NN]-[slug].md` :
+
+- `en cours` → on continue normalement
+- `planifiée` → refuser et orienter vers `/build-feature`
+- `terminée` → signaler qu'elle est déjà livrée et orienter vers `/fix` pour un correctif
+- `abandonnée` → refuser et demander confirmation : peut-être une erreur de cible. Ne pas livrer sans validation explicite.
 
 **Confirmation du test utilisateur** — avant de continuer :
 

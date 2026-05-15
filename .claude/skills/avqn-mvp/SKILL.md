@@ -99,6 +99,18 @@ Si l'utilisateur demande d'installer Spec-Kit, Superpowers ou un autre framework
 
 Ne jamais modifier `CLAUDE.md` ou `.avqn/STACK.md` sans demander explicitement à l'utilisateur. `.avqn/PRODUCT.md` n'est modifié que par `/init-project` ou à la demande explicite.
 
+## Abandonner une feature
+
+Si l'utilisateur change d'avis sur une feature après l'avoir planifiée (ou pendant le build) :
+
+1. Ouvrir la fiche `specs/[NN]-[slug].md`
+2. Passer le statut à `abandonnée`
+3. Optionnellement, ajouter dans la partie 3 une ligne expliquant la raison de l'abandon (utile pour la traçabilité)
+
+La fiche reste en place dans `specs/` — on ne supprime pas, on ne déplace pas. Le numéro `[NN]` reste **consommé** : la prochaine feature prend le numéro suivant, on ne réutilise jamais un numéro déjà attribué (même abandonné).
+
+`/build-feature` et `/ship-feature` refusent de partir sur une feature en statut `abandonnée` sans confirmation explicite (pour le cas où l'utilisateur veut la réactiver).
+
 ## Pour aller plus loin
 
 Quand le projet aura grandi (>20 features, vrais utilisateurs en production, besoin de tests, équipe qui s'agrandit), il sera temps de passer en **phase 2 AVQN** : ajout de tests, environnements multiples, framework de spec-driven development, CI/CD plus robuste.

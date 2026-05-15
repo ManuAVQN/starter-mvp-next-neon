@@ -7,7 +7,7 @@ Format à utiliser pour générer `specs/[NN]-[slug].md` en phase 1.
 ```markdown
 # Feature [NN] — [Titre clair de la feature]
 
-> Statut : planifiée | en cours | terminée
+> Statut : planifiée | en cours | terminée | abandonnée
 > Créée le : [YYYY-MM-DD]
 > Terminée le : [YYYY-MM-DD ou vide]
 
