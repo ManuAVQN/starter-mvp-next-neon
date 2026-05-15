@@ -16,6 +16,16 @@ Le skill s'active automatiquement via le `CLAUDE.md` à la racine. Aucune instal
 
 Détails du workflow dans `.claude/skills/avqn-mvp/SKILL.md` et ses références.
 
+### Outils Claude Code complémentaires (livrés avec le repo)
+
+| Outil | Source | Usage |
+|---|---|---|
+| Skill `frontend-design` | [anthropics/claude-code](https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design) | Auto-activé sur travail UI — guide les choix esthétiques pour éviter le rendu IA générique |
+| Slash command `/code-review` | [anthropics/claude-code](https://github.com/anthropics/claude-code/tree/main/plugins/code-review) | Review de PR via plusieurs agents en parallèle (CLAUDE.md compliance, bugs, historique) |
+| MCP `context7` | [upstash/context7](https://github.com/upstash/context7) | Docs à jour des libs (Next, Better Auth, Drizzle…) — ajoutez "use context7" à un prompt |
+
+Le MCP context7 est configuré sans clé API (tier public, rate-limited). Pour des quotas plus larges, créez une clé sur [context7.com](https://context7.com) et ajoutez l'header dans `.mcp.json`.
+
 ## Prérequis
 
 - Node.js 20+

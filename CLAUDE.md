@@ -64,6 +64,14 @@ Ne pas dupliquer ces contenus ici ni ailleurs.
 
 Pour adapter le starter à un nouveau projet : modifier `APP_NAME` et `APP_DESCRIPTION` dans `lib/config.ts`. Tous les écrans s'alignent automatiquement.
 
+## Outils complémentaires disponibles
+
+En plus du workflow AVQN, le repo embarque trois outils Claude Code livrés tels quels :
+
+- **Skill `frontend-design`** (Anthropic, auto-activé sur travail UI) — guide les choix esthétiques pour éviter le rendu IA générique.
+- **Slash command `/code-review`** (Anthropic) — review de PR via plusieurs agents en parallèle (CLAUDE.md compliance, bugs, historique).
+- **MCP `context7`** (Upstash, `.mcp.json`) — sert les docs à jour des libs (Next, Better Auth, Drizzle, etc.). Ajoutez "use context7" à un prompt pour l'invoquer.
+
 ## Comportement hors workflow
 
 Si la demande utilisateur ne correspond à aucune des trois commandes :
